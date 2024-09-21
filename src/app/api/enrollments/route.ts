@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { headers } from "next/headers";
 import { Payload } from "@lib/DB";
 
-export const GET = async (request: NextRequest) => {
+export const GET = async () => {
   const rawAuthHeader = headers().get("authorization");
 
   if (!rawAuthHeader || !rawAuthHeader.startsWith("Bearer ")) {
@@ -187,7 +187,7 @@ export const DELETE = async (request: NextRequest) => {
     const payload = jwt.verify(token, secret);
     studentId = (<Payload>payload).studentId;
     role = (<Payload>payload).role;
-  } catch (error) {
+  } catch {
     return NextResponse.json({
       ok: false,
       message: "Invalid token",
